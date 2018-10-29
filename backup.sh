@@ -53,12 +53,12 @@ fi
 
 printf "${Green}Start dump${EC}"
 # Maybe in next 'version' use heroku-toolbelt
-# /app/vendor/heroku-toolbelt/bin/heroku pg:backups capture $DATABASE --app $HEROKU_TOOLBELT_APP
-# BACKUP_URL=`/app/vendor/heroku-toolbelt/bin/heroku pg:backups:public-url --app $HEROKU_TOOLBELT_APP | cat`
-# curl --progress-bar -o /tmp/"${DBNAME}_${FILENAME}" $BACKUP_URL
-# gzip /tmp/"${DBNAME}_${FILENAME}"
 
-time pg_dump $DBURL_FOR_BACKUP | gzip >  /tmp/"${DBNAME}_${FILENAME}".gz
+# time pg_dump $DBURL_FOR_BACKUP | gzip >  /tmp/"${DBNAME}_${FILENAME}".gz
+/app/vendor/heroku-toolbelt/bin/heroku pg:backups capture $DATABASE --app runa-focus-web-oss
+BACKUP_URL=`/app/vendor/heroku-toolbelt/bin/heroku pg:backups:public-url --app runa-focus-web-oss | cat`
+curl --progress-bar -o /tmp/"${DBNAME}_${FILENAME}" $BACKUP_URL
+gzip /tmp/"${DBNAME}_${FILENAME}".gz
 
 #EXPIRATION_DATE=$(date -v +"2d" +"%Y-%m-%dT%H:%M:%SZ") #for MAC
 EXPIRATION_DATE=$(date -d "$EXPIRATION days" +"%Y-%m-%dT%H:%M:%SZ")
